@@ -47,6 +47,18 @@
 	}
   
   var openDropdownList = function(that) {
+    // Find all the elements using this plugin and close its dropdownlist if it's opened.
+    $('select').each(function() {
+      var instance = $.data(this, pluginName);
+      if (instance) {
+        if(instance['closeWhenClickingOutside']() && !$(this).is(that.originalSelect)) {
+          instance['close']();
+        }
+      }
+    }); 
+
+
+
 
     triggerCallback(that, 'onBeforeOpen');
 
@@ -168,24 +180,6 @@
       	closeDropdownList(that);
       });
 
-      // Bind event 'beforeShow' to dropdownList
-      // Being fired before the dropdownList showing
-      that.dropdownList
-      			.bind('beforeShow', function() {
-      				if ($.isFunction(that.options.onBeforeOpen))
-      					that.options.onBeforeOpen();
-
-      				// Find all the elements using this plugin and close its dropdownlist if it's opened.
-      				$('select').each(function() {
-      					var instance = $.data(this, pluginName);
-      					if (instance) {
-      						if(instance['closeWhenClickingOutside']() && !$(this).is(that.originalSelect)) {
-      							instance['close']();
-      						}
-      					}
-      				}); 
-      			});
-
       that.dropdownList.css("height", that.options.height + "px");
       that.dropdownWrapper.css("width", that.options.width + "px");
 
@@ -203,6 +197,7 @@
     disable: function() {
     	this.selectionPresenter.off('click').addClass("disabled");
     	this.originalSelect.prop('disabled', true);
+      closeDropdownList(this);
     },
     enable: function() {
     	var that = this;

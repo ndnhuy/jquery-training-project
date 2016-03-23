@@ -120,11 +120,15 @@
 }
 
 #console {
-    
+
     margin-top: 200px;
     height: 300px;
     background: black;
     color: white;
+}
+
+.disabled {
+    background: grey
 }
 
 /* No CSS3 support */
