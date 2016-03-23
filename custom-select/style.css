@@ -21,6 +21,9 @@
 	display:block;
 	padding:0;
 	border: 1px #000 solid;
+	overflow: scroll;
+	overflow-x: hidden;
+	background: #ddd;
 }
 
 .dropdown-wrapper ul li{

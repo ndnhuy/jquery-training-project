@@ -60,7 +60,6 @@
   		else {
   			that.dropdownList.toggle();
   		}
-  		
   	}
     	
 
@@ -168,6 +167,8 @@
       				}); 
       			});
 
+      that.dropdownList.css("height", that.options.height + "px");
+
     },
     open: function() {
    	  if (!selectBoxIsDisabled(this)) {
@@ -250,7 +251,8 @@
     liTemplate: "<li></li>",
     closeWhenClickingOutside: true,
     onBeforeOpen: null,
-    animation: false
+    animation: false,
+    height: 200
   };
 
   $(function() {

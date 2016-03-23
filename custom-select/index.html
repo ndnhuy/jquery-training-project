@@ -44,7 +44,8 @@
     <script src="show-event-plugin.js"></script>
     <script>
       $('#handled-select').fancySelectBox({
-        animation: true
+        animation: true,
+        height: 100
       });
 
       var selectBeingHandled = $('#handled-select').data('fancySelectBox');
@@ -57,11 +58,6 @@
             selectBeingHandled.animation(false);
         }
       });
-
-
-      
-
-      
 
       $('#handler-select').fancySelectBox({
         onSelect: function(index) {
