@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en" ng-app>
+  <head>
+    <title>Chat Example</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css">
+  </head>
+  <body>
+    
+    <!-- <div id="wrapper">
+        <select id="handled-select">
+          <option>---</option>
+          <option>One</option>
+          <option>Two</option>
+          <option>Three</option>
+        </select>
+        <div class="dropdown-wrapper">
+            <div class="selection-presenter">SELECT</div>
+              <ul class="facyDropdown">
+                <li data-option-id="0">One</li>
+                <li data-option-id="1">Two</li>
+                <li data-option-id="2">Three</li>
+              </ul>
+      </div>
+    </div> -->
+    <div id="wrapper">
+        <select id="handled-select">
+          <option>---</option>
+          <option>One</option>
+          <option>Two</option>
+          <option>Three</option>
+        </select>
+    </div>
+    
+
+    <div id="wrapper2">
+        <select id="handler-select">
+          <option>---</option>
+          <option>open</option>
+          <option>close</option>
+          <option>disable</option>
+          <option>enable</option>
+          <option>reset</option>
+          <option>select item #2</option>
+          <option>destroy</option>
+        </select>
+    </div>
+    
+    
+    
+    
+    
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="script.js"></script>
+    <script src="show-event-plugin.js"></script>
+    <script>
+      
+
+
+      $('#handled-select').fancySelectBox();
+
+      var selectBeingHandled = $('#handled-select').data('fancySelectBox');
+
+      $('#handler-select').fancySelectBox({
+        onSelect: function(index) {
+            switch (index) {
+                case 1: {
+                    selectBeingHandled.open();
+                    selectBeingHandled.closeWhenClickingOutside(false);
+                    break;
+                }
+                case 2: {
+                    selectBeingHandled.close();
+                    selectBeingHandled.closeWhenClickingOutside(true);
+                    break;
+                }
+                case 3: {
+                    selectBeingHandled.disable();
+                    break;
+                }
+                case 4: {
+                    selectBeingHandled.enable();
+                    break;
+                }
+                case 5: {
+                    selectBeingHandled.reset();
+                    break;
+                }
+                case 6: {
+                    selectBeingHandled.select(2);
+                    break;
+                }
+                case 7: {
+                    selectBeingHandled.destroy();
+                    break;
+                }
+            }
+        }
+      });
+    </script>
+  </body>
+</html>

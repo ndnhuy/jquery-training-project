@@ -1,0 +1,59 @@
+
+.facyDropdown{
+    list-style: none;
+ }
+.selection-presenter {
+  width:100px;
+  padding:5px;
+  border:1px solid #000;
+  float:left;
+  height:20px
+}
+.dropdown-wrapper{
+	position:relative;
+}
+.dropdown-wrapper ul{
+	position:absolute;
+	top:27px;
+	left:0;
+	list-style:none;
+	margin:0;
+	display:block;
+	padding:0;
+	border: 1px #000 solid;
+}
+
+.dropdown-wrapper ul li{
+  padding:5px; 
+  background: #ddd;
+  width: 100px;
+}
+
+.dropdown-wrapper ul li:hover {
+	background: #09f;
+}
+
+.disabled {
+	background: gray;
+}
+
+#handled-select {
+	left: 200px;
+}
+
+#handler-select {
+	left: 500px;
+}
+
+
+#wrapper {
+	float: left;
+
+}
+
+#wrapper2 {
+	float: left;
+	margin-left: 200px;
+}
+
+
