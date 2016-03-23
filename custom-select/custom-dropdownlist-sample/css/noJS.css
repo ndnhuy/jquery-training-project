@@ -1,0 +1,14 @@
+
+
+/* DEMO 2 */
+
+.dropdown-wrapper:focus .fancyDropdown {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.dropdown-wrapper:focus:after {
+    border-width: 0 6px 6px 6px;
+}
+
+

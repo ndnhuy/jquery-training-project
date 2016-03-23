@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Custom Drop-Down List Styling</title>
+        <meta name="description" content="Custom Drop-Down List Styling with CSS3" />
+        <meta name="author" content="Codrops" />
+        <link rel="shortcut icon" href="../favicon.ico"> 
+        <link rel="stylesheet" type="text/css" href="css/style.css" />
+       	<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css' />
+    </head>
+    <body>
+			<div class="container">
+
+				<div id="handled-select-wrapper">
+					<input id="animationCheckbox1" type="checkbox" checked><b>Animation #1</b></input>
+		        	<select id="handled-select">
+			          <option>---</option>
+			          <option>Dog</option>
+			          <option>Cat</option>
+			          <option>Mouse</option>
+			        </select>
+	        	</div>
+
+				<div id="handler-select-wrapper">
+					<input id="animationCheckbox2" type="checkbox" checked><b>Animation #2</b></input>
+					<select id="handler-select">
+			          <option>---</option>
+			          <option>open</option>
+			          <option>close</option>
+			          <option>disable</option>
+			          <option>enable</option>
+			          <option>reset</option>
+			          <option>select item #1</option>
+			          <option>select item #2</option>
+			          <option>select item #3</option>
+			          <option>add image to item #1</option>
+			          <option>add image to item #2</option>
+			          <option>add image to item #3</option>
+			          <option>destroy</option>
+			        </select>
+				</div>
+				<textarea id="console" rows="10" cols="100">
+					Output
+				</textarea>
+			</div>
+        	
+			
+		<!-- jQuery if needed -->
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+		<script src="js/fancy-dropdown-plugin.js"></script>
+		<script>
+
+			 $('#handled-select').fancySelectBox({
+		        animation: true,
+		        height: 100
+		      }).on('onBeforeOpen', function() {
+					$("#console").append($.now() + '     #1: onBeforeOpen has been called\n');
+					$("#console").scrollTop($("#console")[0].scrollHeight);
+				});;
+
+		      var selectBeingHandled = $('#handled-select').data('fancySelectBox');
+
+		      $('#animationCheckbox').change(function() {
+		        if($(this).is(":checked")) {
+		            selectBeingHandled.animation(true);
+		        }
+		        else {
+		            selectBeingHandled.animation(false);
+		        }
+		      });
+
+		      $('#handler-select').fancySelectBox({
+		        onSelect: function(index) {
+		            switch (index) {
+		                case 1: {
+		                    selectBeingHandled.open();
+		                    selectBeingHandled.closeWhenClickingOutside(false);
+		                    break;
+		                }
+		                case 2: {
+		                    selectBeingHandled.close();
+		                    selectBeingHandled.closeWhenClickingOutside(true);
+		                    break;
+		                }
+		                case 3: {
+		                    selectBeingHandled.disable();
+		                    break;
+		                }
+		                case 4: {
+		                    selectBeingHandled.enable();
+		                    break;
+		                }
+		                case 5: {
+		                    selectBeingHandled.reset();
+		                    break;
+		                }
+		                case 6: {
+		                    selectBeingHandled.select(1);
+		                    break;
+		                }
+		                case 7: {
+		                    selectBeingHandled.select(2);
+		                    break;
+		                }
+		                case 8: {
+		                    selectBeingHandled.select(3);
+		                    break;
+		                }
+		                case 9: {
+		                	selectBeingHandled.replaceLiTemplate("<li><img src='images/dog.png'></li>", 1);   
+		                    break;
+		                }
+		                case 10: {
+		                	selectBeingHandled.replaceLiTemplate("<li><img src='images/cat.png'></li>", 2); 
+		                	break;
+		                }
+		                case 11: {
+		                	selectBeingHandled.replaceLiTemplate("<li><img src='images/mouse.jpg'></li>", 3); 
+		                	break;
+		                }
+		                case 12: {
+		                	selectBeingHandled.destroy();
+		                	break;
+		                }
+		            }
+		        },
+		        height: 500,
+		        width: 300
+		      })
+				.on('onBeforeOpen', function() {
+					$("#console").append($.now() + '       #2: onBeforeOpen has been called\n');
+					$("#console").scrollTop($("#console")[0].scrollHeight);
+				});
+		</script>
+    </body>
+</html>

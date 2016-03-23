@@ -1,0 +1,136 @@
+@import url('demo.css');
+@import url('font-awesome.css');
+
+/* GLOBALS */
+
+*,
+*:after,
+*:before {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+::selection {
+    background: transparent; 
+}
+
+::-moz-selection {
+    background: transparent; 
+}
+
+.wrapper-demo {
+    margin: 60px 0 0 0;
+    *zoom: 1;
+    font-weight: 400;
+}
+
+
+
+
+/* DEMO 2 */
+
+.dropdown-wrapper {
+    /* Size and position */
+    position: relative; /* Enable absolute positionning for children and pseudo elements */
+    margin: 0 auto;
+    padding: 10px 15px;
+
+    /* Styles */
+    background: #fff;
+    border-left: 5px solid grey;
+    cursor: pointer;
+    outline: none;
+}
+
+
+
+.dropdown-wrapper .fancyDropdown {
+  /* Size & position */
+    position: absolute;
+    top: 100%;
+    left: -5px;
+    right: 0px;
+
+    /* Styles */
+   
+    background: white;
+    list-style: none;
+
+    /* Hiding */
+    pointer-events: auto;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+.dropdown-wrapper .fancyDropdown li {
+    display: block;
+    text-decoration: none;
+    color: #333;
+    border-left: 5px solid;
+    padding: 5px;
+    background: white;
+}
+
+.dropdown-wrapper .fancyDropdown li:nth-child(1) { 
+    border-left-color: #00ACED;
+}
+
+.dropdown-wrapper .fancyDropdown li:nth-child(2) {
+    border-left-color: #4183C4;
+}
+.dropdown-wrapper .fancyDropdown li:nth-child(3) {
+    border-left-color: #3B5998;
+}
+
+.dropdown-wrapper .fancyDropdown li i {
+    margin-right: 5px;
+    color: inherit;
+    vertical-align: middle;
+}
+
+/* Hover state */
+
+.dropdown-wrapper .fancyDropdown li:hover {
+    color: grey;
+}
+
+
+.container {
+    top: 100px;
+    left: 100px;
+}
+
+#handled-select-wrapper {
+    float: left;
+}
+
+#handler-select-wrapper {
+    float: left;
+    margin-left: 300px;
+}
+
+.text-content {
+    margin-left: 5px;
+}
+
+#animationCheckbox {
+}
+
+#console {
+    
+    margin-top: 200px;
+    height: 300px;
+    background: black;
+    color: white;
+}
+
+/* No CSS3 support */
+
+
+
+
+
+/* No CSS3 support: none */
