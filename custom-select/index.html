@@ -7,23 +7,8 @@
   </head>
   <body>
     
-    <!-- <div id="wrapper">
-        <select id="handled-select">
-          <option>---</option>
-          <option>One</option>
-          <option>Two</option>
-          <option>Three</option>
-        </select>
-        <div class="dropdown-wrapper">
-            <div class="selection-presenter">SELECT</div>
-              <ul class="facyDropdown">
-                <li data-option-id="0">One</li>
-                <li data-option-id="1">Two</li>
-                <li data-option-id="2">Three</li>
-              </ul>
-      </div>
-    </div> -->
     <div id="wrapper">
+        <h3>Custom Select</h3>
         <select id="handled-select">
           <option>---</option>
           <option>One</option>
@@ -34,6 +19,7 @@
     
 
     <div id="wrapper2">
+        <h3>Controller</h3>
         <select id="handler-select">
           <option>---</option>
           <option>open</option>
@@ -41,13 +27,15 @@
           <option>disable</option>
           <option>enable</option>
           <option>reset</option>
+          <option>select item #1</option>
           <option>select item #2</option>
+          <option>select item #3</option>
           <option>destroy</option>
         </select>
     </div>
     
     
-    
+    <input id="animationCheckbox" type="checkbox" checked>Animation #1</input>
     
     
     
@@ -55,12 +43,25 @@
     <script src="script.js"></script>
     <script src="show-event-plugin.js"></script>
     <script>
-      
-
-
-      $('#handled-select').fancySelectBox();
+      $('#handled-select').fancySelectBox({
+        animation: true
+      });
 
       var selectBeingHandled = $('#handled-select').data('fancySelectBox');
+
+      $('#animationCheckbox').change(function() {
+        if($(this).is(":checked")) {
+            selectBeingHandled.animation(true);
+        }
+        else {
+            selectBeingHandled.animation(false);
+        }
+      });
+
+
+      
+
+      
 
       $('#handler-select').fancySelectBox({
         onSelect: function(index) {
@@ -88,14 +89,25 @@
                     break;
                 }
                 case 6: {
-                    selectBeingHandled.select(2);
+                    selectBeingHandled.select(1);
                     break;
                 }
                 case 7: {
+                    selectBeingHandled.select(2);
+                    break;
+                }
+                case 8: {
+                    selectBeingHandled.select(3);
+                    break;
+                }
+                case 9: {
                     selectBeingHandled.destroy();
                     break;
                 }
             }
+        },
+        onBeforeOpen: function() {
+
         }
       });
     </script>

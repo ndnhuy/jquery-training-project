@@ -3,14 +3,25 @@
  *  @description description
  *  @version 1.0
  *  @options
- *    option
+ *    liTemplate
+ *	  closeWhenClickingOutside
+ *    onBeforeOpen
+ *    animation
  *  @events
  *    event
  *  @methods
  *    init
- *    publicMethod
+ *    open
+ *	  close
+ *    enable
+ *    disable
+ *    reset
+ *    select
+ *    closeWhenClickingOutside
+ *    animation
  *    destroy
  */
+
 ;(function($, window, undefined) {
   'use strict';
 
@@ -21,9 +32,37 @@
   }
 
   var onSelectionPresenter = function(that, event) {
-		that.dropdownList.toggle();
+		toggleDropdownList(that);
 	    event.stopPropagation();
 	}
+  
+  var openDropdownList = function(that) {
+  	if (that.options.animation) {
+  		that.dropdownList.slideDown("slow");
+  	}
+  	else {
+  		that.dropdownList.show();
+  	}
+  }
+  var closeDropdownList = function(that) {
+  		if (that.options.animation) {
+  			that.dropdownList.slideUp("slow");
+  		}
+  		else {
+  			that.dropdownList.hide();
+  		}
+	}
+  
+  var toggleDropdownList = function(that) {
+  		if (that.options.animation) {
+  			that.dropdownList.slideToggle("slow");
+  		}
+  		else {
+  			that.dropdownList.toggle();
+  		}
+  		
+  	}
+    	
 
   function Plugin(element, options) {
     this.element = $(element);
@@ -34,13 +73,13 @@
   Plugin.prototype = {
     init: function() {
     	var that = this;
-
-    	var hasMouseEnter = false;
     	// Add event of clicking outside this custom select
     	$('html').click(function() {
-    		if (that.options.closeWhenClickingOutside)
-    			that.dropdownList.hide();
+    		if (that.options.closeWhenClickingOutside) {
+    			closeDropdownList(that);
+    		}
     	});
+
     	
 	    var generateDropdownList = function() {
 	  		
@@ -67,9 +106,9 @@
 
 		            var selectedOptionIndex = $(this).data("option-id");
 		            that.selectionPresenter.html(that.selectOptions.eq(selectedOptionIndex).html());
-		            that.dropdownList.toggle();
+		            console.log("click on liTemplate");
+		            closeDropdownList(that);
 		            
-		            //that.selectOptions.eq(selectedOptionIndex).prop("selected", true);
 		            that.originalSelect.val(that.selectOptions.eq(selectedOptionIndex).html()).trigger('change');
 
 		        });
@@ -84,10 +123,6 @@
 		    that.selectionPresenter.click(function(e) {
 		    	onSelectionPresenter(that, e);
 		    });
-		    // that.dropdownWrapper.mouseleave(function(e) {
-		    // 	that.dropdownList.hide();
-		    // });
-		    
 		    
 		    that.dropdownWrapper.append(that.selectionPresenter);
 		    that.dropdownWrapper.append(that.dropdownList);
@@ -106,21 +141,27 @@
       generateDropdownList();
       that.originalSelect.after(that.dropdownWrapper);
       that.dropdownList.hide();
-      //that.originalSelect.hide();
+      that.originalSelect.hide();
       
       // Make the behavior on dropdownList affecting to originalSelect
       that.originalSelect.on('change', function() {
       	$.isFunction(that.options.onSelect) && that.options.onSelect.call(that, this.selectedIndex);
       	that.selectionPresenter.html(that.selectOptions.eq(this.selectedIndex).html());
+      	closeDropdownList(that);
       });
 
+      // Bind event 'beforeShow' to dropdownList
+      // Being fired before the dropdownList showing
       that.dropdownList
       			.bind('beforeShow', function() {
+      				if ($.isFunction(that.options.onBeforeOpen))
+      					that.options.onBeforeOpen();
+
       				// Find all the elements using this plugin and close its dropdownlist if it's opened.
       				$('select').each(function() {
       					var instance = $.data(this, pluginName);
       					if (instance) {
-      						if(instance['closeWhenClickingOutside']()) {
+      						if(instance['closeWhenClickingOutside']() && !$(this).is(that.originalSelect)) {
       							instance['close']();
       						}
       					}
@@ -130,13 +171,13 @@
     },
     open: function() {
    	  if (!selectBoxIsDisabled(this)) {
-   	  	this.dropdownList.show();
+   	  	openDropdownList(this);
    	  }
       	
     },
     close: function() {
       if (!selectBoxIsDisabled(this))
-    	this.dropdownList.hide();
+    	closeDropdownList(this);
     },
     disable: function() {
     	this.selectionPresenter.off('click').addClass("disabled");
@@ -151,19 +192,21 @@
     	that.originalSelect.prop('disabled', false);
     },
     reset: function() {
-    	if (!this.selectionPresenter.hasClass('disabled'))
+    	if (!this.selectionPresenter.hasClass('disabled')) {
 	    	this.originalSelect
 	    		.val(this.selectOptions.eq(0).html())
 	    		.trigger('change');
+    	}
     },
     select: function(index) {
-    	this.originalSelect
-    		.val(this.selectOptions.eq(index).html())
-    		.trigger('change');
+    	if (!this.selectionPresenter.hasClass('disabled')) {
+    		this.originalSelect
+	    		.val(this.selectOptions.eq(index).html())
+	    		.trigger('change');
+    	}
+    	
     },
-    foo: function() {
-    	console.log("FOOOO");
-    },
+    
     closeWhenClickingOutside: function(val) {
     	if (val == null) {
     		return this.options.closeWhenClickingOutside;
@@ -173,10 +216,21 @@
     	}
     },
 
+    animation: function(val) {
+    	if (val == null) {
+    		return this.options.animation;
+    	}
+    	else {
+    		this.options.animation = val;
+    	}
+    },
+
     destroy: function() {
       // remove events
       // deinitialize
-      $.removeData(this.originalSelect, pluginName);
+      this.originalSelect.show();
+      this.dropdownWrapper.remove();
+
     }
   };
 
@@ -194,7 +248,9 @@
   $.fn[pluginName].defaults = {
     onSelect: null,
     liTemplate: "<li></li>",
-    closeWhenClickingOutside: true
+    closeWhenClickingOutside: true,
+    onBeforeOpen: null,
+    animation: false
   };
 
   $(function() {
